@@ -8,7 +8,6 @@ from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import (CrawlSpider, Rule)
 from scrapy.http import Request
 from scrapy.selector import Selector
-import pinyin
 
 from restaurant.items import MeituanItem
 
@@ -64,7 +63,8 @@ class MeituanSpider(CrawlSpider):
                     if area['name'] == u'全部':
                         continue
                     item = MeituanItem()
-                    item['city'] = response.xpath('//span[@class="nav-city"]/text()').extract()[0]
+                    item['province'] = response.xpath('//meta[@name="location"]/@province').extract()[0]
+                    item['city'] = response.xpath('//meta[@name="location"]/@city').extract()[0]
                     item['region'] = region['name'].strip()
                     item['area'] = area['name'].strip()
                     item['category'] = category['name'].strip()

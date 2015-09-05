@@ -20,6 +20,7 @@ class MeituanPipeline(object):
             self.filter_dic[item['restaurant_name']] = item['address']
             try:
                 item['lng'], item['lat'] = gaode_to_baidu(float(item['lng']), float(item['lat']))
+                itemp['province_code'] = pinyin.get('province')
                 item['city_code'] = pinyin.get(item['city_code'])
                 item['region_code'] = pinyin.get(item['region'])
                 item['area_code'] = pinyin.get(item['area'])

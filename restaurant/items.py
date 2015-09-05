@@ -21,6 +21,8 @@ class MeituanItem(scrapy.Item):
     comment = scrapy.Field()
     category = scrapy.Field()
 
+    province = scrapy.Field()
+    province_code = scrapy.Field()
     city = scrapy.Field()
     region = scrapy.Field()
     area = scrapy.Field()
