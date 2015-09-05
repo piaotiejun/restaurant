@@ -13,11 +13,12 @@ def gaode_to_baidu(gaode_lng, gaode_lat):
     """
     z = math.sqrt(pow(gaode_lng, 2) + pow(gaode_lat, 2)) + 0.00002 * math.sin(gaode_lat*pi)
     theta = math.atan2(gaode_lat, gaode_lng) + 0.000003 * math.cos(gaode_lng*pi)
-    baidu_lng = z * math.cos(theta) + 0.0065
-    baidu_lat = z * math.sin(theta) + 0.006
-    print(baidu_lng)
-    print(baidu_lat)
+    #baidu_lng = z * math.cos(theta) + 0.0065
+    #baidu_lat = z * math.sin(theta) + 0.006
+    baidu_lng = z * math.cos(theta) + 0.00657
+    baidu_lat = z * math.sin(theta) + 0.0058
+
     return (baidu_lng, baidu_lat)
 
 if __name__ == "__main__":
-    gaode_to_baidu(122.149721, 37.429876)
+    print(gaode_to_baidu(122.136819,37.486766))

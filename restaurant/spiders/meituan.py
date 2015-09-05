@@ -8,29 +8,31 @@ from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import (CrawlSpider, Rule)
 from scrapy.http import Request
 from scrapy.selector import Selector
+import pinyin
 
 from restaurant.items import MeituanItem
 
 
 headers = {
-"Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-"Accept-Language":"en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4,zh-TW;q=0.2",
-"Cache-Control":"max-age=0",
-"Host":"i.meituan.com",
-"RA-Sid":"7C4125DE-20150519-013547-91bdb7-b00401",
-"RA-Ver":"3.0.7",
-"User-Agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36"
+"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+"Accept-Language": "en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4,zh-TW;q=0.2",
+"Cache-Control": "max-age=0",
+"Host": "i.meituan.com",
+"RA-Sid": "7C4125DE-20150519-013547-91bdb7-b00401",
+"RA-Ver": "3.0.7",
+"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36"
 }
 
-city = 'weihai'
-country = 'china'
-province = 'shandong'
+shandong_city_list = ['jinan', 'qingdao', 'zibo', 'zaozhuang', 'dongying', 'yantai', 'weifang', 'jining', 'taian', 'weihai', 'rizhao', 'binzhou', 'dezhou', 'liaocheng', 'linyi', 'heze', 'laiwu']
+biggest_city_list = ['beijing', 'shanghai', 'guangzhou', 'shenzhen']
+city_list = shandong_city_list + biggest_city_list
 
 class MeituanSpider(CrawlSpider):
     name = 'meituan'
     allowed_domains = ['i.meituan.com']
 
-    """美团url参数:
+    """
+    :brief: 美团url参数
     :city: 城市拼音
     :cateType: cateType=poi 只有这个值
     :stid: stid=_b1 只有这个值
@@ -38,7 +40,8 @@ class MeituanSpider(CrawlSpider):
     :bid: bid=商圈id
     :p: p=页数
     """
-    start_urls = ['http://i.meituan.com/%s?cid=1&cateType=poi&stid=_b1'%city]
+    print(city_list)
+    start_urls = ['http://i.meituan.com/%s?cid=1&cateType=poi&stid=_b1'%city for city in city_list]
 
     rules = (
         #Rule(LinkExtractor(allow=r'http://i\.meituan\.com/poi/\d*?$'), callback='parse_item', follow=True),
@@ -61,13 +64,11 @@ class MeituanSpider(CrawlSpider):
                     if area['name'] == u'全部':
                         continue
                     item = MeituanItem()
-                    item['country'] = country
-                    item['province'] = province
-                    item['city'] = city
+                    item['city'] = response.xpath('//span[@class="nav-city"]/text()').extract()[0]
                     item['region'] = region['name'].strip()
                     item['area'] = area['name'].strip()
                     item['category'] = category['name'].strip()
-                    url = 'http://i.meituan.com/%s?cid=%d&bid=%d&cateType=poi&stid=_b1'%(item['city'], category['id'], area['id'])
+                    url = 'http://i.meituan.com/%s?cid=%d&bid=%d&cateType=poi&stid=_b1'%(pinyin.get(item['city']), category['id'], area['id'])
 
                     yield Request(url,
                             method='GET',
