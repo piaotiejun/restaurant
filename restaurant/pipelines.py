@@ -12,6 +12,8 @@ class MeituanPipeline(object):
         self.filter_dic = {}
 
     def process_item(self, item, spider):
+        if spider.name not in ['meituan']:
+            return item
         if self.filter_dic.get(item['restaurant_name']) == item['address']:
             print(item['restaurant_name'])
             print(item['address'])
