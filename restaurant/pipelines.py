@@ -39,6 +39,12 @@ class DianpingPipeline(object):
         if spider.name not in ['dazhongdianping']:
             return item
 
+        # address
+        if len(item['address']) != 1:
+            raise DropItem("Duplicate item found: %s" % item)
+        else:
+            item['address'] = item['address'][0].strip()
+
         # restaurant_name
         if len(item['restaurant_name']) != 1:
             raise DropItem("Duplicate item found: %s" % item)
@@ -60,12 +66,6 @@ class DianpingPipeline(object):
             item['dianping_logo_url'] = ''
         else:
             item['dianping_logo_url'] = item['dianping_logo_url'][0].strip()
-
-        # address
-        if len(item['address']) != 1:
-            raise DropItem("Duplicate item found: %s" % item)
-        else:
-            item['address'] = item['address'][0].strip()
 
         # phone
         if len(item['phone']) == 0:

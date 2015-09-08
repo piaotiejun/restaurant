@@ -49,7 +49,7 @@ class DazhongdianpingSpider(CrawlSpider):
             item['province_code'] = ''
             item['city_code'] = big_city_code_list[index]
             item['city'] = city
-            url = 'http://www.dianping.com' + item['city_code'] + '/food'
+            url = 'http://www.dianping.com/' + item['city_code'].strip('/') + '/food'
 
             city_cnt += 1
             print('大城市数量:\t'+str(city_cnt))
@@ -76,7 +76,7 @@ class DazhongdianpingSpider(CrawlSpider):
                 item['province_code'] = pinyin.get(item['province']).strip()
                 item['city'] = city.strip()
                 item['city_code'] = city_code_list[index].strip('\r\n\t/ ')
-                url = 'http://www.dianping.com' + item['city_code'] + '/food'
+                url = 'http://www.dianping.com/' + item['city_code'].strip('/') + '/food'
 
                 city_cnt += 1
                 print('小城市数量:\t'+str(city_cnt))
