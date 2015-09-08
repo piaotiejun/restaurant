@@ -63,6 +63,7 @@ NEWSPIDER_MODULE = 'restaurant.spiders'
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     'restaurant.pipelines.MeituanPipeline': 300,
+    'restaurant.pipelines.DianpingPipeline': 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
