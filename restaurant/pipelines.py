@@ -71,7 +71,7 @@ class DianpingPipeline(object):
         if len(item['phone']) == 0:
             item['phone'] = ''
         else:
-            item['phone'] = ','.join(item['address'])
+            item['phone'] = ','.join(item['phone'])
 
         # score
         if len(item['score']) == 0:
