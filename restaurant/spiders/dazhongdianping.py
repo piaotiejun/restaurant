@@ -131,7 +131,10 @@ class DazhongdianpingSpider(CrawlSpider):
                     one_item['area_code'] = pinyin.get(one_item['area'])
 
                     url = "".join(['http://www.dianping.com', area_url_list[area_index], 'g', category_id_list[cate_index]])
-                    print('大城市分类商圈url:')
+                    print('大城市商圈分类url数量:\t'+str(big_city_xx_cnt))
+                    print(one_item['city'])
+                    print(one_item['category'])
+                    print(one_item['area'])
                     print(url)
                     if url not in url_set:
                         url_set.add(url)
@@ -139,7 +142,6 @@ class DazhongdianpingSpider(CrawlSpider):
                         continue
                     global big_city_xx_cnt
                     big_city_xx_cnt += 1
-                    print('大城市商圈分类url数量:\t'+str(big_city_xx_cnt))
                     request_list.append(Request(url,
                                                 method='GET',
                                                 meta={'item': one_item},
@@ -181,15 +183,19 @@ class DazhongdianpingSpider(CrawlSpider):
                     one_item['area'] = area.strip()
                     one_item['area_code'] = pinyin.get(one_item['area'])
                     url = "".join(['http://www.dianping.com', category_url_list[cate_index], 'r', area_id_list[area_index]])
-                    print('小城市饭店分类商圈 url:')
+
+                    small_city_xx_cnt += 1
+                    print('大城市商圈分类url数量:\t'+str(small_city_xx_cnt))
                     print(url)
+                    print(one_item['city'])
+                    print(one_item['category'])
+                    print(one_item['area'])
+
                     if url not in url_set:
                         url_set.add(url)
                     else:
                         continue
                     global small_city_xx_cnt
-                    small_city_xx_cnt += 1
-                    print('大城市商圈分类url数量:\t'+str(small_city_xx_cnt))
                     request_list.append(Request(url,
                                                 method='GET',
                                                 meta={'item': one_item},
