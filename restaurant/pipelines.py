@@ -77,12 +77,8 @@ class DianpingPipeline(object):
 
         # score
         if len(item['score']) == 0:
-            item['score'] = '-1'
+            item['score'] = -1
         else:
-            item['score'] = item['score'][0].split('str')[-1]
+            item['score'] = float(item['score'][0].split('str')[-1])/10
 
         return item
-
-
-
-
