@@ -1,0 +1,11 @@
+*.pyc
+
+/venc
+
+*.json
+
+*.log
+
+*.a
+
+*.o
