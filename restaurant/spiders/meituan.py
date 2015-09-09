@@ -24,13 +24,10 @@ headers = {
     "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36"
 }
 
-#shandong_city_list = ['jinan', 'qingdao', 'zibo', 'zaozhuang', 'dongying', 'yantai', 'weifang', 'jining', 'taian', 'weihai', 'rizhao', 'binzhou', 'dezhou', 'liaocheng', 'linyi', 'heze', 'laiwu']
-#biggest_city_list = ['beijing', 'shanghai', 'guangzhou', 'shenzhen']
-#city_list = shandong_city_list + biggest_city_list
-
 city_list = []
 for line in open("./city_list", "r"):
     city_list.append(pinyin.get(line.strip()))
+
 
 class MeituanSpider(CrawlSpider):
     name = 'meituan'
@@ -193,6 +190,7 @@ class MeituanSpider(CrawlSpider):
                 errback=None,
                 encoding=response.encoding,
                 callback=self.parase_gaode_address)
+
 
     def parase_gaode_address(self, response):
         item = response.meta['item']

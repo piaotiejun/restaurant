@@ -236,7 +236,7 @@ class DazhongdianpingSpider(CrawlSpider):
             restaurant = Selector(text=restaurant)
             one_item = deepcopy(item)
             one_item['restaurant_name'] = restaurant.xpath('//img/@title').extract()
-            one_item['dianping_logo_url'] = restaurant.xpath('//img/@title').extract()
+            one_item['dianping_logo_url'] = restaurant.xpath('//img/@src').extract()
             one_item['address'] = restaurant.xpath('//span[@class="addr"]/text()').extract()
             url = restaurant.xpath('//a[@rel="nofollow"]/@href').extract()
             url = 'http://www.dianping.com' + url[0].strip()
