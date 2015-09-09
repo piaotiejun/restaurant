@@ -50,7 +50,6 @@ class DianpingPipeline(object):
             raise DropItem("Duplicate item found: %s" % item)
         else:
             item['restaurant_name'] = item['restaurant_name'][0]
-
         if self.filter_dic.get(item['restaurant_name']) == item['address']:
             print(item['restaurant_name'])
             print(item['address'])
@@ -59,7 +58,10 @@ class DianpingPipeline(object):
             self.filter_dic[item['restaurant_name']] = item['address']
 
         # lng lat
-        # item['lng'], item['lat'] = gaode_to_baidu(float(item['lng']), float(item['lat']))
+        try:
+            item['lng'], item['lat'] = gaode_to_baidu(float(item['lng']), float(item['lat']))
+        except BaseException as e:
+            print(e)
 
         # logo url
         if len(item['dianping_logo_url']) != 1:
